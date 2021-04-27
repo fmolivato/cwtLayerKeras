@@ -5,8 +5,8 @@
 This project main goal is to produce a simple way to compute **CWT** (Continuous Wavelet Transformation) on signals in keras models.
 
 ## Available wavelet:
-* morlet
-* mexican hat / ricker
+* "morl" (morlet)
+* "mex_hat" or "rick" (mexican hat / ricker)
 
 ## Useful features
 class paramenter | type | description | why
@@ -15,4 +15,4 @@ depth_pad | int | It allows to specify the number of padding channel that the la
 trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
 
 ## :exclamation: DISCLAIMER :exclamation:
-This project was built for research purpose, so feel free to open some issue if you find some errors :thumbsup:
+This project was built for research purpose, so feel free to open some issue if you find some errors
