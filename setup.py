@@ -1,4 +1,8 @@
+import pathlib
 from distutils.core import setup
+
+README = "This project main goal is to produce a simple way to compute CWT (Continuous Wavelet Transformation) on signals with keras functional API."
+
 setup(
     name='cwtLayerKeras',         # How you named your package folder (MyLib)
     packages=['cwtLayerKeras'],   # Chose the same as "name"
@@ -7,6 +11,8 @@ setup(
     license='GNU AGPLv3',
     # Give a short description about your library
     description='Keras layer to compute the cwt(continuous wavelet transformation) scalogram of signals',
+    long_description=README,
+    long_description_content_type="text/markdown",
     author='fmolivato',                   # Type in your name
     author_email='f.olivato.97@gmail.com',      # Type in your E-Mail
     # Provide either the link to your github or to your website
@@ -25,7 +31,8 @@ setup(
         # Define that your audience are developers
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: GNU AGPLv3 License',   # Again, pick a license
+        # Again, pick a license
+        'License :: OSI Approved :: GNU Affero General Public License v3',
         # Specify which pyhton versions that you want to support
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
