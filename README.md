@@ -58,4 +58,6 @@ def build_model():
  :exclamation: This project was built for research purpose, so there could be some errors:exclamation:
  
  Feel free to open issues on those.
+ 
+ Contributers are welcome :thumbsup:
 
