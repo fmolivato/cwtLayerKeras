@@ -8,7 +8,7 @@ This project main goal is to produce a simple way to compute **CWT** (Continuous
 * "morl" (morlet)
 * "mex_hat" or "rick" (mexican hat / ricker)
 
-## Useful features
+## Additional features
 class paramenter | type | description | why
 --- | --- | --- | ---
 depth_pad | int | It allows to specify the number of padding channel that the layer need to add | some standard keras model (like efficientnet) need 3 channel depth to execute (instead of just the single one of the scalogram)
