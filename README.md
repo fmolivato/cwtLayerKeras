@@ -17,6 +17,39 @@ class paramenter | type | description | why
 depth_pad | int | It allows to specify the number of padding channel that the layer need to add | some standard keras model (like efficientnet) need 3 channel depth to execute (instead of just the single one of the scalogram)
 trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
 
+## Example
+
+```python
+def build_model():
+    input_data = layers.Input(shape=(x_val.shape[-1],))
+    cwt = cwtt(
+        sample_count=x_val.shape[-1],
+        scales_step=10,
+        min_scale = 4,
+        max_scale=224,
+        output_size=(224, 224),
+        depth_pad=2,
+    )
+    scalogram = cwt(input_data)
+    base_model = EfficientNetB0(include_top=False, weights=None)(scalogram)
+
+    x = layers.GlobalAveragePooling2D()(base_model)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.3)(x)
+
+    predictions = layers.Dense(OUTPUT_SIZE, activation="softmax")(x)
+
+    model = Model(inputs=input_data, outputs=predictions)
+
+    model.summary()
+    model.compile(
+        optimizer="adam",
+        loss="categorical_crossentropy",
+        metrics=["accuracy"],
+    )
+    return model
+```
+
 ## Disclaimer:
  :exclamation: This project was built for research purpose :exclamation:
  
