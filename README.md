@@ -4,10 +4,15 @@
 
 This project main goal is to produce a simple way to compute **CWT** (Continuous Wavelet Transformation) on signals :satellite: with keras functional API.
 
-## Installation
-loading
+* [Installation](#installation)
+* [Available wavelets](#available-wavelets)
+* [Additional Features](#additional-features)
+* [Disclaimer](#:exclamation:-disclaimer-:exclamation:)
 
-## Available wavelet:
+## Installation
+    pip install cwtLayerKeras
+
+## Available wavelets:
 * "morl" (morlet)
 * "mex_hat" or "rick" (mexican hat / ricker)
 
