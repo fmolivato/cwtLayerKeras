@@ -20,6 +20,10 @@ trainable_kernels | bool | It make the wavelets that produce the scalogram train
 ## Example
 
 ```python
+from cwtLayerKeras import Cwt as cwtt
+
+# some code
+
 def build_model():
     input_data = layers.Input(shape=(x_val.shape[-1],))
     cwt = cwtt(
