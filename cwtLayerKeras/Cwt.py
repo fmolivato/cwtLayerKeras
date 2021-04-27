@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Cwt(tf.keras.layers.Layer):
-    ''' Tensorflow2.4 implementation of Keras layer for doing optimized cwt on batches of signals. '''
+    """ Tensorflow2.4 implementation of Keras layer for doing optimized cwt on batches of signals. """
 
     def __init__(
         self,
@@ -16,9 +16,9 @@ class Cwt(tf.keras.layers.Layer):
         depth_pad: int = None,
         name: str = "cwt_layer",
         trainable_kernels: bool = False,
-        **kwargs
+        **kwargs,
     ):
-        '''
+        """
         Class initializer
 
             Parameters:
@@ -47,7 +47,7 @@ class Cwt(tf.keras.layers.Layer):
                     Boolean that is used to enable gradient optimization on the wavelet kernels
                     (mainly for research pourpose).
 
-        '''
+        """
         super(Cwt, self).__init__(name=name, **kwargs)
         self.max_scale = max_scale
         self.output_size = output_size
@@ -86,12 +86,12 @@ class Cwt(tf.keras.layers.Layer):
     # useful when 'trainable_kernels' are True so it is possible to see
     # how the net gradient optimize the wavelet kernel
     def get_kernels(self):
-        '''Return the batch of wavelets scales'''
+        """Return the batch of wavelets scales"""
         return self.kernels
 
     # @tf.function
     def vectorized_cwts(self, spectra, scaled_kernels):
-        '''
+        """
         Vectorize cwt across a batch of samples
 
             Parameters:
@@ -102,16 +102,15 @@ class Cwt(tf.keras.layers.Layer):
 
             Returns:
                 (tf.Tensor): Batch of scalograms
-        '''
+        """
         return tf.vectorized_map(
-            lambda spectrum: self.cwt(
-                scaled_kernels, spectrum), spectra
+            lambda spectrum: self.cwt(scaled_kernels, spectrum), spectra
         )
 
     # necessary to silence some tensorflow 2.4 warnings
     @tf.autograph.experimental.do_not_convert
     def cwt(self, batch_kernels, sample):
-        '''
+        """
         Returns a scalogram of the sample
 
             Parameters:
@@ -123,7 +122,7 @@ class Cwt(tf.keras.layers.Layer):
             Returns:
                 res_norm (tf.Tensor): 
                     Scalogram normalized in [0, 1]
-        '''
+        """
         h, w = batch_kernels.shape
         batch_kernels = tf.reshape(batch_kernels, tf.constant([h, w, 1]))
 
@@ -132,16 +131,23 @@ class Cwt(tf.keras.layers.Layer):
         sample = tf.reverse(sample, tf.constant([0]))
         sample = tf.reshape(sample, tf.constant([sample.shape[0], 1, 1]))
 
-        res = tf.nn.conv1d(batch_kernels, filters=sample,
-                           stride=1, padding="SAME")
-        res_norm = (res-tf.reduce_min(res)) / \
-            (tf.reduce_max(res)-tf.reduce_min(res))
+        res = tf.nn.conv1d(batch_kernels, filters=sample, stride=1, padding="SAME")
+        res_norm = (res - tf.reduce_min(res)) / (
+            tf.reduce_max(res) - tf.reduce_min(res)
+        )
 
         return res_norm
 
     # batch of wavelet scales used in vectorized convolution with single sample
-    def create_kernels(self, wavelet_name: str, highest: int, sample_count: int, lowest: int = 1, step: float = 1):
-        '''
+    def create_kernels(
+        self,
+        wavelet_name: str,
+        highest: int,
+        sample_count: int,
+        lowest: int = 1,
+        step: float = 1,
+    ):
+        """
         Returns batch of wavelet with different scale (from 'lowest' to 'highest' with 'step')
         with tensor first dimension of 'sample_count'.
 
@@ -165,35 +171,32 @@ class Cwt(tf.keras.layers.Layer):
             Returns:
                 batch_kernels (tf.Tensor): 
                     Tensor of wavelet kernels of size (range(lowest, highest, step), sample_count)
-        '''
+        """
         # since ricker and mexican hat are the same
-        wavelet_name = 'rick' if wavelet_name == 'mex_hat' else wavelet_name
+        wavelet_name = "rick" if wavelet_name == "mex_hat" else wavelet_name
 
         scales = tf.range(lowest, highest + 1, step, dtype=tf.float32)
 
         switcher = {
             "morl": tf.vectorized_map(
-                lambda scale: self.morlet_wavelet(
-                    tf.float32, scale, sample_count),
+                lambda scale: self.morlet_wavelet(tf.float32, scale, sample_count),
                 scales,
             ),
             "rick": tf.vectorized_map(
-                lambda scale: self.ricker_wavelet(
-                    tf.float32, scale, sample_count),
+                lambda scale: self.ricker_wavelet(tf.float32, scale, sample_count),
                 scales,
             ),
         }
 
         if wavelet_name not in switcher.keys():
-            raise ValueError(
-                f"This wavelet in not present in the {__file__} library")
+            raise ValueError(f"This wavelet in not present in the {__file__} library")
 
         batch_kernels = switcher.get(wavelet_name)
 
         return batch_kernels
 
     def ricker_wavelet(self, tf_type, scale: float, sample_count: int):
-        '''
+        """
         Returns a ricker (or mexican hat) wavelet with defined 'scale' and size of 'sample_count'
         Equation defined here:
         https://it.mathworks.com/help/wavelet/ref/mexihat.html
@@ -208,25 +211,26 @@ class Cwt(tf.keras.layers.Layer):
 
             Returns:
                 wav (tf.Tensor): A wavelet with ricker kernel tensor of 'tf_type' type 
-        '''
+        """
+
         def wave_equation(time):
             time = tf.cast(time, tf_type)
 
-            tSquare = time ** 2.
-            sigma = 1.
-            sSquare = sigma ** 2.
+            tSquare = time ** 2.0
+            sigma = 1.0
+            sSquare = sigma ** 2.0
 
             # _1 = 2 / ((3 * a) ** .5 * np.pi ** .25)
-            _1a = (3. * sigma) ** .5
-            _1b = np.pi ** .25
-            _1 = 2. / (_1a * _1b)
+            _1a = (3.0 * sigma) ** 0.5
+            _1b = np.pi ** 0.25
+            _1 = 2.0 / (_1a * _1b)
 
             # _2 = 1 - t**2 / a**2
-            _2 = 1. - tSquare / sSquare
+            _2 = 1.0 - tSquare / sSquare
 
             # _3 = np.exp(-(t**2) / (2 * a ** 2))
-            _3a = -1. * tSquare
-            _3b = 2. * sSquare
+            _3a = -1.0 * tSquare
+            _3b = 2.0 * sSquare
             _3 = tf.exp(_3a / _3b)
 
             return _1 * _2 * _3
@@ -234,7 +238,7 @@ class Cwt(tf.keras.layers.Layer):
         return self.wavelet_helper(tf_type, scale, sample_count, wave_equation)
 
     def morlet_wavelet(self, tf_type, scale: float, sample_count: int):
-        '''
+        """
         Returns a morlet wavelet with defined 'scale' and size of 'sample_count'
         Equation defined here:
         https://www.mathworks.com/help/wavelet/ref/morlet.html
@@ -249,16 +253,17 @@ class Cwt(tf.keras.layers.Layer):
 
             Returns:
                 wav (tf.Tensor): A wavelet with morlet kernel tensor of 'tf_type' type 
-        '''
+        """
+
         def wave_equation(time):
-            return tf.exp(-1. * (time ** 2.) / 2.) * tf.cos(5. * time)
+            return tf.exp(-1.0 * (time ** 2.0) / 2.0) * tf.cos(5.0 * time)
 
         wav = self.wavelet_helper(tf_type, scale, sample_count, wave_equation)
 
         return wav
 
     def wavelet_helper(self, tf_type, scale, sample_count, wave_equation):
-        '''
+        """
         Takes care of all the data casting and time calculation for a correct wavelet calculation,
         and then produce the wavelet of kernel 'wave_equation'
 
@@ -274,12 +279,14 @@ class Cwt(tf.keras.layers.Layer):
 
             Returns:
                 wav (tf.Tensor): A wavelet with 'wave_equation' kernel tensor of 'tf_type' type 
-        '''
+        """
         scale = tf.cast(scale, tf_type)
         sample_count = tf.cast(sample_count, tf_type)
-        unscaledTimes = tf.cast(
-            tf.range(tf.cast(sample_count, tf.int32)), tf_type) - (sample_count - 1.) / 2.
+        unscaledTimes = (
+            tf.cast(tf.range(tf.cast(sample_count, tf.int32)), tf_type)
+            - (sample_count - 1.0) / 2.0
+        )
         times = unscaledTimes / scale
         wav = wave_equation(times)
-        #wav           = wav * scale ** -.5
+        # wav           = wav * scale ** -.5
         return wav
