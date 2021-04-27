@@ -6,7 +6,7 @@ README = "This project main goal is to produce a simple way to compute CWT (Cont
 setup(
     name='cwtLayerKeras',         # How you named your package folder (MyLib)
     packages=['cwtLayerKeras'],   # Chose the same as "name"
-    version='0.1',      # Start with a small number and increase it with every change you make
+    version='0.2',      # Start with a small number and increase it with every change you make
     # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     license='GNU AGPLv3',
     # Give a short description about your library
