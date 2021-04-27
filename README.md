@@ -7,7 +7,7 @@ This project main goal is to produce a simple way to compute **CWT** (Continuous
 * [Installation](#installation)
 * [Available wavelets](#available-wavelets)
 * [Additional Features](#additional-features)
-* [Disclaimer](#:exclamation:-disclaimer-:exclamation:)
+* [Disclaimer](#disclaimer)
 
 ## Installation
     pip install cwtLayerKeras
@@ -22,6 +22,8 @@ class paramenter | type | description | why
 depth_pad | int | It allows to specify the number of padding channel that the layer need to add | some standard keras model (like efficientnet) need 3 channel depth to execute (instead of just the single one of the scalogram)
 trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
 
-## :exclamation: DISCLAIMER :exclamation:
-This project was built for research purpose, so feel free to open some issue if you find some errors
+## Disclaimer:
+ :exclamation: This project was built for research purpose :exclamation:
+ 
+ Feel free to open some issue if you find some errors.
 
