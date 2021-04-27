@@ -57,5 +57,5 @@ def build_model():
 ## Disclaimer:
  :exclamation: This project was built for research purpose, so there could be some errors:exclamation:
  
- Feel free to open open issues on those.
+ Feel free to open issues on those.
 
