@@ -40,7 +40,7 @@ class Cwt(tf.keras.layers.Layer):
                 output_size (tuple): 
                     Tuple with the (x,y) size of the returned scalograms during training 
                 depth_pad (int): 
-                    Decimal of how much channel of pad is needed
+                    Decimal of how much channel of pad is needed (Suggested 2)
                 name (str): 
                     Name of the layer in the keras summary of the model
                 trainable_kernels (bool): 
@@ -78,8 +78,8 @@ class Cwt(tf.keras.layers.Layer):
         # take care of the depth_pad that make it runnable on nets like
         # efficientnet that requires 3 channel depth (instead of just one).
         if self.depth_pad:
-            pad = tf.ones((tf.shape(cwts)[0], *self.output_size, 1))
-            cwts = tf.concat([cwts, pad, pad], axis=3)
+            pads = tf.ones((self.depth_pad, tf.shape(cwts)[0], *self.output_size, 1))
+            cwts = tf.concat([cwts, *pads], axis=3)
 
         return cwts
 
