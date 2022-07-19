@@ -57,8 +57,8 @@ scales_step|float|Change wavelet's scale by this range step|
 trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
 wavelet|str|Wavelet kernel to use in the CWT. Now there are just "morl" (morlet), "mex_hat"/"rick" (mexican hat / ricker) |
 
-## Disclaimer:
 More insightful informations can be found in the code's docs :wink:
+## Disclaimer:
 
  :exclamation: This project was built for research purpose, so there could be some errors:exclamation:
  
