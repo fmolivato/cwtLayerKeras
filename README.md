@@ -7,17 +7,7 @@ This project main goal is to produce a simple way to compute **CWT** (Continuous
 ## Installation
     pip install cwtLayerKeras
 
-## Available wavelets:
-* "morl" (morlet)
-* "mex_hat" or "rick" (mexican hat / ricker)
-
-## Additional features
-class paramenter | type | description | why
---- | --- | --- | ---
-depth_pad | int | It allows to specify the number of padding channel that the layer need to add | some standard keras model (like efficientnet) need 3 channel depth to execute, instead of just the single one of the scalogram
-trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
-
-## Example
+## Usage
 
 ```python
 from cwtLayerKeras import Cwt as cwtt
@@ -54,7 +44,21 @@ def build_model():
     return model
 ```
 
+
+## Parameters
+Paramenter | Type | Description | Why
+--- | --- | --- | ---
+depth_pad | int | It allows to specify the number of padding channel that the layer need to add | some standard keras model (like efficientnet) need 3 channel depth to execute, instead of just the single one of the scalogram
+max_scale|int|Highest wavelet's scale|
+min_scale|int|Lowest wavelet's scale|
+output_size|tuple|Size of the returned scalograms|
+scales_step|float|Change wavelet scale by this range step|
+trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
+wavelet|str|Wavelet kernel to use in the CWT. Now there are just "morl" (morlet), "mex_hat"/"rick" (mexican hat / ricker) |
+
 ## Disclaimer:
+More insightful informations can be found in the code's docs :wink:
+
  :exclamation: This project was built for research purpose, so there could be some errors:exclamation:
  
  Feel free to open issues on those.
