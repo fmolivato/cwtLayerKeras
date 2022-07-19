@@ -52,7 +52,7 @@ depth_pad | int | It allows to specify the number of padding channel that the la
 max_scale|int|Highest wavelet's scale|
 min_scale|int|Lowest wavelet's scale|
 output_size|tuple|Size of the returned scalograms|
-scales_step|float|Change wavelet scale by this range step|
+scales_step|float|Change wavelet's scale by this range step|
 trainable_kernels | bool | It make the wavelets that produce the scalogram trainable | interesting to see how/if the net optimizers change the wavelet kernel (research purpose)
 wavelet|str|Wavelet kernel to use in the CWT. Now there are just "morl" (morlet), "mex_hat"/"rick" (mexican hat / ricker) |
 
