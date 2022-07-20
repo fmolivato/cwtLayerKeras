@@ -4,6 +4,8 @@
 
 This project main goal is to produce a simple way to compute **CWT** (Continuous Wavelet Transformation) scalogram on signals :satellite: with keras functional API.
 
+![Screenshot](cwtLayerKeras/cwt_performance.png)
+
 ## Installation
     pip install cwtLayerKeras
 
