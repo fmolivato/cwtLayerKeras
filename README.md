@@ -6,7 +6,7 @@ This project main goal is to produce a simple way to compute **CWT** (Continuous
 
 ![Screenshot](cwtLayerKeras/cwt_performance.png)
 
-The upper image show the performancee of the custom layer on the TitanX GPU
+The image above shows the performance of the layer on a TitanX GPU
 
 ## Installation
     pip install cwtLayerKeras
