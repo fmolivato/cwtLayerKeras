@@ -1,10 +1,12 @@
 # cwtLayerKeras
 
-<img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?&style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?&style=for-the-badge&logo=TensorFlow&logoColor=white" /> [![Generic badge](https://img.shields.io/badge/python-v3.6+-<COLOR>.svg)]() [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) 
+<img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?&style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?&style=for-the-badge&logo=TensorFlow&logoColor=white" /> [![Generic badge](https://img.shields.io/badge/python-v3.6+-<COLOR>.svg)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This project main goal is to produce a simple way to compute **CWT** (Continuous Wavelet Transformation) scalogram on signals :satellite: with keras functional API.
 
 ![Screenshot](cwtLayerKeras/cwt_performance.png)
+
+The upper image show the performancee of the custom layer on the TitanX GPU
 
 ## Installation
     pip install cwtLayerKeras
